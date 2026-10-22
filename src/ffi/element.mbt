@@ -84,6 +84,10 @@ pub fn Element::has_parent(self : Element) -> Bool = "mhx_ffi" "element_has_pare
 pub fn Element::same(self : Element, other : Element) -> Bool = "mhx_ffi" "element_same"
 
 ///|
+/// Get a key that stays stable for this element reference
+pub fn Element::key(self : Element) -> Int = "mhx_ffi" "element_key"
+
+///|
 /// Get the tag name (uppercase)
 pub fn Element::tag_name(self : Element) -> String = "mhx_ffi" "element_tag_name"
 

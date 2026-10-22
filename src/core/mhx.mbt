@@ -215,17 +215,9 @@ fn process_mutation_record(mhx : Mhx, record : @ffi.MutationRecord) -> Unit {
 }
 
 ///|
-/// Simple hash function for element identification
+/// Stable key for element identification
 fn hash_element(element : @ffi.Element) -> Int {
-  let id = element.id()
-  let tag = element.tag_name()
-  let combined = tag + "#" + id
-  // Simple string hash
-  let mut hash = 0
-  for c in combined {
-    hash = hash * 31 + c.to_int()
-  }
-  hash
+  element.key()
 }
 
 ///|

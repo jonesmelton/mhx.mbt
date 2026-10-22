@@ -78,6 +78,7 @@ pub fn Element::id(Self) -> String
 pub fn Element::inner_html(Self) -> String
 pub fn Element::insert_adjacent_html(Self, String, String) -> Unit
 pub fn Element::is_null(Self) -> Bool
+pub fn Element::key(Self) -> Int
 pub fn Element::matches(Self, String) -> Bool
 pub fn Element::outer_html(Self) -> String
 pub fn Element::parent_element_ffi(Self) -> Self

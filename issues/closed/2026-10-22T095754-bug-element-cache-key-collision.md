@@ -1,6 +1,7 @@
 # Fix element cache key collision between id-less elements
 
 Created: 2026-10-22
+Completed: 2026-10-22
 Model: Claude Opus 5.5
 
 ## Summary
@@ -39,3 +40,9 @@ Click `b`.
 - the same element keeps the same key across events
 - the key does not depend on mutable DOM state such as `id`
 - element identity is covered by a smoke test
+
+## 解決方法
+
+`src/ffi/mhx_ffi.js` に `element_key` を追加し、`WeakMap` で element reference ごとに安定した key を払い出すようにした。`hash_element` は `tagName#id` の文字列 hash をやめ、`Element::key` の値を返す。key は `id` などの DOM 状態に依存せず、DOM に属性も書き込まない。`WeakMap` なので、DOM から外れた element を key のために保持し続けることもない。
+
+`npm/smoke/element-key-contract.test.mjs` に、同じ tag の id-less element が別々の key を持つこと、同じ element は `id` を変えても同じ key を保つことの test を追加した。`docs/ffi-boundary.md` の verification contract にこの test を追記した。

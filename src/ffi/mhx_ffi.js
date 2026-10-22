@@ -10,6 +10,10 @@ const fetchCallbacks = new Map();
 const mutationCallbacks = new Map();
 const mutationRecordsMap = new Map();
 
+// Stable keys for element references, used by the runtime config cache
+const elementKeys = new WeakMap();
+let nextElementKey = 1;
+
 // Reference to the MoonBit module (set during initialization)
 let mbtModule = null;
 
@@ -251,6 +255,15 @@ export function element_matches(elem, selector) {
 
 export function element_same(a, b) {
   return a === b;
+}
+
+export function element_key(elem) {
+  let key = elementKeys.get(elem);
+  if (key === undefined) {
+    key = nextElementKey++;
+    elementKeys.set(elem, key);
+  }
+  return key;
 }
 
 export function element_parent_element(elem) {
@@ -927,6 +940,7 @@ const mhx_ffi = {
   element_closest_exists,
   element_matches,
   element_same,
+  element_key,
   element_parent_element,
   element_has_parent,
   element_tag_name,

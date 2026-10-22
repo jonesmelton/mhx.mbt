@@ -79,4 +79,5 @@ Package and boundary checks live in:
 
 - `npm/smoke/package-contract.test.mjs` for ESM/UMD exports, `package.json` exports, and published file surface
 - `npm/smoke/swap-contract.test.mjs` for DOM swap primitives, lifecycle event details, and representative FFI dispatch failure behavior
+- `npm/smoke/element-key-contract.test.mjs` for element identity keys used by the runtime config cache
 - `src/core/error_test.mbt` for stable `MhxError` JSON fields, including `MHX_FFI_ERROR`
