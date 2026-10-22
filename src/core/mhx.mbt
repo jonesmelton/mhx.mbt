@@ -526,15 +526,18 @@ pub fn Mhx::handle_event(
                 let timing_state = self.timing.get_state(
                   element_id, trigger_index,
                 )
+                // Bind the matched element; `current` keeps walking up the
+                // tree before a delayed callback runs
+                let element = current
                 // Apply timing modifiers (delay, throttle, debounce)
                 let execute_now = @event.apply_timing_modifiers(
                   timing_state,
                   trigger,
-                  fn() { self.execute_action(current, cfg, trigger, event) },
+                  fn() { self.execute_action(element, cfg, trigger, event) },
                 )
                 if execute_now {
                   // Execute immediately if no timing modifiers
-                  self.execute_action(current, cfg, trigger, event)
+                  self.execute_action(element, cfg, trigger, event)
                 }
                 // Handle once modifier
                 if trigger.is_once() {

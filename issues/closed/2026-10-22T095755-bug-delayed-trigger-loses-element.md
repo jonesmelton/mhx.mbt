@@ -1,6 +1,7 @@
 # Fix delayed triggers running against the wrong element
 
 Created: 2026-10-22
+Completed: 2026-10-22
 Model: Claude Opus 5.5
 
 ## Summary
@@ -38,3 +39,9 @@ Without `delay:100ms` the request includes `q=abc`.
 
 - timed and immediate execution use the element that matched the trigger
 - delayed GET requests include the matched element's form values
+
+## 解決方法
+
+`Mhx::handle_event` で trigger が match した時点の `current` を immutable な `element` に束縛し、timing modifier に渡す callback と即時実行の両方でそれを使うようにした。MoonBit の closure は `let mut` の変数そのものを capture するので、以前は delay 後の callback が DOM walk を終えた後の `current` を見ていた。
+
+この経路は `Mhx::handle_event` の DOM walk 全体を通るため、browser app scaffolding なしの MoonBit test では再現できない。issue の HTML を build した `dist/mhx.umd.js` で開き、`GET /search?q=abc` が送られることを確認した。
